@@ -4,6 +4,7 @@ import Home from './home'
 import AddForm from './addForm'
 import BlogList from './blogList'
 import EditForm from './editView'
+import Latest from './latest'
 
 const Main = () => (
   <main>
@@ -11,6 +12,7 @@ const Main = () => (
       <Route exact path='/' component={Home} />
       <Route path='/add' component={AddForm} />
       <Route path='/posts' component={BlogList} />
+      <Route path='/latest' component={Latest} />
       <Route path='/edit/:id' component={EditForm} />
     </Switch>
   </main>

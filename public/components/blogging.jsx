@@ -13,13 +13,16 @@ export class Blogging extends React.Component {
       <nav className='navbar navbar-expand-lg navbar-light bg-light'>
         <ul className='navbar-nav mr-auto'>
           <li className='nav-item active'>
-            <Link class='nav-link' to='/'> Home </Link>
+            <Link className='nav-link' to='/'> Home </Link>
           </li>
           <li className='nav-item'>
-            <Link class='nav-link' to='/add'> Add Post </Link>
+            <Link className='nav-link' to='/add'> Add Post </Link>
           </li>
           <li className='nav-item'>
-            <Link class='nav-link' to='/posts'> Posts </Link>
+            <Link className='nav-link' to='/posts'> Posts </Link>
+          </li>
+          <li className='nav-item'>
+            <Link className='nav-link' to='/latest'> Latest </Link>
           </li>
         </ul>
       </nav>

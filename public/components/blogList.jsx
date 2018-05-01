@@ -1,9 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import BlogPost from './post'
 
 export class BlogList extends React.Component {
   preparePosts () {
-    let posts = this.props.posts.map((post, index) => {
+    let posts = this.props.Posts.map((post, index) => {
       return (
         <li key={index} className='list-group-item'>
           <BlogPost data={post} />
@@ -14,11 +15,17 @@ export class BlogList extends React.Component {
   }
 
   render () {
-    let content = this.props.posts.length
-			? this.props.posts.map((post, index) => <BlogPost key={index} data={post} />)
-	: <div className='no-posts'>No posts yet!</div>
+    let content = this.props.Posts.length
+? this.props.Posts.map((post, index) => <BlogPost key={index} data={post} />)
+: <div className='no-posts'>No posts yet!</div>
     return content
   }
 }
 
-export default BlogList
+const mapStateToProps = (state, ownProps) => {
+  return {
+    Posts: state.Blogs.posts
+  }
+}
+
+export default connect(mapStateToProps)(BlogList)

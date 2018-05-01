@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import BlogPost from './post'
 
-export class BlogList extends React.Component {
+export class PostList extends React.Component {
   preparePosts () {
     let posts = this.props.Posts.map((post, index) => {
       return (
@@ -28,4 +28,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(BlogList)
+export default connect(mapStateToProps)(PostList)

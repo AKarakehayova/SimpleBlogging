@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { EditPost } from '../utils/actions/Blogs/blogs'
-import history from '../utils/history'
+import { EditPost } from '../../utils/actions/Blogs/blogs'
+import NotificationSystem from 'react-notification-system'
+import history from '../../utils/history'
 
 export class EditForm extends React.Component {
   constructor (props) {
@@ -37,6 +38,10 @@ export class EditForm extends React.Component {
   submitPost (e) {
     e.preventDefault()
     this.props.EditPost(this.state.id, this.state.post)
+    this.refs.notificationSystem.addNotification({
+      message: 'Post successfully updated',
+      level: 'success'
+    })
   }
 
   render () {
@@ -77,7 +82,10 @@ export class EditForm extends React.Component {
 
     </form>
 
-    return <div> {form} </div>
+    return <div>
+      <NotificationSystem ref='notificationSystem' />
+      {form}
+    </div>
   }
 }
 

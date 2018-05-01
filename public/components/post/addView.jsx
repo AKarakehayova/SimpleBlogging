@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { AddBlog } from '../utils/actions/Blogs/blogs'
+import { AddBlog } from '../../utils/actions/Blogs/blogs'
+import NotificationSystem from 'react-notification-system'
 import moment from 'moment'
 
 export class AddForm extends React.Component {
@@ -48,6 +49,10 @@ export class AddForm extends React.Component {
       }
     })
     this.props.AddBlog(newPost)
+    this.refs.notificationSystem.addNotification({
+      message: 'Post successfully added',
+      level: 'success'
+    })
   }
 
   render () {
@@ -88,7 +93,10 @@ export class AddForm extends React.Component {
 
     </form>
 
-    return <div> {form} </div>
+    return <div>
+      <NotificationSystem ref='notificationSystem' />
+      {form}
+    </div>
   }
 }
 

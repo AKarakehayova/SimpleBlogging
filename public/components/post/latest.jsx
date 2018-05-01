@@ -40,7 +40,7 @@ export class Latest extends React.Component {
   render () {
     let content = this.props.Posts.length
 ? this.preparePosts()
-: <div className='no-posts'>No posts yet!</div>
+: <div>No posts yet!</div>
     return (
       <div>
         <div className='form-group'>

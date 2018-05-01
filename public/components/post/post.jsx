@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Remarkable from 'remarkable'
-import { DeletePost } from '../utils/actions/Blogs/blogs'
-import history from '../utils/history'
+import { DeletePost } from '../../utils/actions/Blogs/blogs'
+import history from '../../utils/history'
 const markDown = new Remarkable()
 
 export class BlogPost extends React.Component {

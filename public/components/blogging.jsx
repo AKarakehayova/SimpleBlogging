@@ -2,6 +2,7 @@ import React from 'react'
 import BlogList from './blogList'
 import {hot} from 'react-hot-loader'
 import moment from 'moment'
+import ModalForm from './modalForm'
 
 export class Blogging extends React.Component {
   constructor (props) {
@@ -15,16 +16,30 @@ export class Blogging extends React.Component {
         tag: '',
         url: '',
         status: 'Active'
-      }
+			},
+			isClicked: false,
+			showModal: false
     }
     this.handleChange = this.handleChange.bind(this)
-    this.submitPost = this.submitPost.bind(this)
-  }
+		this.submitPost = this.submitPost.bind(this)
+		this.clickButton = this.clickButton.bind(this)
+	}
+	
+	componenentWillUnmount(){
+		this.setState({isClicked:false})
+	}
 
-  render () {
-    return (
-      <div>
-         <form onSubmit={this.submitPost}>
+
+clickButton(){
+	let clicked = this.state.isClicked
+	console.log(!clicked)
+	this.setState({isClicked:!clicked})
+}
+
+render () {
+	let modalClose = () => this.setState({ showModal: false });
+
+	let form =  <form onSubmit={this.submitPost}>
 			<div className="form-group">
 			<label>Title</label>
 			<input type="text" className="form-control" value={this.state.post.title} name='title' onChange={this.handleChange} placeholder="Enter title for the post">
@@ -62,12 +77,25 @@ export class Blogging extends React.Component {
       <option>Inactive</option>
     </select>
   </div>
-			<button type="submit" className="btn btn-warning">Submit</button>
+	<button type="submit" className="btn btn-warning">Submit</button>
 
-			</form>
-        <BlogList posts={this.state.posts} />
-      </div>
-    )
+		</form>
+		
+			return  (
+				<div> 
+		 		<button type="button" className="btn btn-primary" onClick={this.clickButton}>Add new post</button>
+				 {/* <ModalForm show={this.state.showModal} onHide={modalClose} /> */}
+
+				 {(this.state.isClicked) ? form : ''}
+				 {(!this.state.isClicked) ?  <BlogList posts={this.state.posts} /> : ''}
+				</div>
+			)
+			// (
+			// 	<div>
+			// 		TEst
+			// 		{/* <button type="button" class="btn btn-primary" onClick={this.clickButton()}>Add new post</button> */}
+			// 	</div>
+			// )
   }
 
   submitPost (e) {
@@ -80,7 +108,7 @@ export class Blogging extends React.Component {
 			tag: '',
 			url: '',
 			status: 'Active'
-		}})
+		}, isClicked:false})
   }
 
   handleChange (e) {

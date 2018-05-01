@@ -11,7 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel-core": "^6.26.3"
+    "babel-core": "^6.26.3",
+    "react-bootstrap": "^0.32.1",
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",

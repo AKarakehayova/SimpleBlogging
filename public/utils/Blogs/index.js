@@ -13,6 +13,20 @@ export function init (state = initialState, action) {
         posts: posts
       })
 
+    case Constants.DELETE_POST:
+      let deletedPosts = state.posts.filter(post => post.id !== action.id)
+      return Object.assign({}, state, {
+        posts: deletedPosts
+      })
+
+    case Constants.EDIT_POST:
+      let rest = state.posts.filter(post => post.id !== action.id)
+      let editedPost = Object.assign(action.post, {id: action.id})
+      rest.push(editedPost)
+      return Object.assign({}, state, {
+        posts: rest
+      })
+
     default:
       return state
   }

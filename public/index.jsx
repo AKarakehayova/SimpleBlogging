@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom'
 import thunkMiddleware from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { applyMiddleware } from 'redux'
-import {BrowserRouter} from 'react-router-dom'
+import {Router} from 'react-router-dom'
+import history from './utils/history'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './components/app'
 
@@ -15,8 +16,8 @@ let store = initiateStore(applyMiddleware(
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <Router history={history}>
       <App />
-    </BrowserRouter>
+    </Router>
   </Provider>
 , document.getElementById('root'))

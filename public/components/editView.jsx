@@ -1,24 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { AddBlog } from '../utils/actions/Blogs/blogs'
-import moment from 'moment'
+import { EditPost } from '../utils/actions/Blogs/blogs'
+import history from '../utils/history'
 
-export class AddForm extends React.Component {
+export class EditForm extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      posts: [],
       post: {
-        title: '',
-        author: '',
-        content: '',
-        tag: '',
-        url: '',
-        status: 'Active'
-      }
+      },
+      id: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.submitPost = this.submitPost.bind(this)
+  }
+
+  componentWillMount () {
+    let id = history.location.pathname.replace('/edit/', '')
+    let post = this.props.Posts.filter(post => post.id.toString() === id)
+    this.setState({post: post[0], id: post[0].id})
   }
 
   handleChange (e) {
@@ -36,18 +36,7 @@ export class AddForm extends React.Component {
 
   submitPost (e) {
     e.preventDefault()
-    let newPost = Object.assign(this.state.post, {date: moment().format('MMM Do YY'), id: Date.now()})
-    this.setState({posts: this.state.posts.concat([newPost]),
-      post: {
-        title: '',
-        author: '',
-        content: '',
-        tag: '',
-        url: '',
-        status: 'Active'
-      }
-    })
-    this.props.AddBlog(newPost)
+    this.props.EditPost(this.state.id, this.state.post)
   }
 
   render () {
@@ -100,8 +89,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    AddBlog: (post) => dispatch(AddBlog(post))
+    EditPost: (id, post) => dispatch(EditPost(id, post))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddForm)
+export default connect(mapStateToProps, mapDispatchToProps)(EditForm)

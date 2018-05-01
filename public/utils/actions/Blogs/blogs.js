@@ -6,3 +6,18 @@ export function AddBlog (blog) {
     post: blog
   }
 }
+
+export function DeletePost (id) {
+  return {
+    type: Constants.DELETE_POST,
+    id: id
+  }
+}
+
+export function EditPost (id, post) {
+  return {
+    type: Constants.EDIT_POST,
+    id: id,
+    post: post
+  }
+}

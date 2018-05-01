@@ -14,14 +14,11 @@ export class BlogList extends React.Component {
   }
 
   render () {
-		let content = this.props.posts.length ? 
-			this.props.posts.map((post, index) => <BlogPost key={index}  data={post}/>)
-	: <div className="no-posts">No posts yet!</div>
-		return content
-			
-
-	
-}
+    let content = this.props.posts.length
+			? this.props.posts.map((post, index) => <BlogPost key={index} data={post} />)
+	: <div className='no-posts'>No posts yet!</div>
+    return content
+  }
 }
 
 export default BlogList

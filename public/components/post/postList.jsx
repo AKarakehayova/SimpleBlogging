@@ -1,25 +1,31 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import BlogPost from './post'
+import {getPosts} from '../../utils/requests'
 
 export class PostList extends React.Component {
-  preparePosts () {
-    let posts = this.props.Posts.map((post, index) => {
-      return (
-        <li key={index} className='list-group-item'>
-          <BlogPost data={post} />
-        </li>
-      )
-    })
-    return posts
-  }
+	constructor(props){
+		super(props)
+		this.state = { 
+			posts: []
+		}
+	}
+	componentDidMount(){
+		getPosts()
+		.then((response)=>{
+			this.setState({posts: response.data})
+		})
+		.catch((error)=>{
+			console.log(error)
+		})
+	}
 
   render () {
-    let content = this.props.Posts.length
-? this.props.Posts.map((post, index) => <BlogPost key={index} data={post} />)
-: <div className='no-posts'>No posts yet!</div>
-    return content
-  }
+			let content = this.state.posts.length
+			? this.state.posts.map((post, index) => <BlogPost key={index} data={post} />)
+			: <div className='no-posts'>No posts yet!</div>
+			return content
+}
 }
 
 const mapStateToProps = (state, ownProps) => {

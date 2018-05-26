@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { AddBlog } from '../../utils/actions/Blogs/blogs'
 import NotificationSystem from 'react-notification-system'
 import moment from 'moment'
-
+import {addNewPost} from '../../utils/requests'
 export class AddForm extends React.Component {
   constructor (props) {
     super(props)
@@ -48,7 +48,7 @@ export class AddForm extends React.Component {
         status: 'Active'
       }
     })
-    this.props.AddBlog(newPost)
+    addNewPost(newPost)
     this.refs.notificationSystem.addNotification({
       message: 'Post successfully added',
       level: 'success'

@@ -2,7 +2,9 @@ const fs = require('fs')
 
 module.exports = {
   getPosts: getPosts,
-  addPost: addPost
+	addPost: addPost,
+	getPostByID: getPostByID,
+	updatePost: updatePost
 }
 let filename = __dirname + '/blog.json'
 
@@ -30,4 +32,43 @@ function addPost (newPost, callback) {
       callback(null, posts, newPost)
     })
   })
+}
+
+function getPostByID (id, callback) {
+  fs.readFile(filename, (err, data) => {
+    if (err) {
+      callback(err)
+    }
+		var posts = JSON.parse(data)
+		let post = posts.filter(p => p.id.toString() === id)
+		callback(null, post)
+  })
+}
+
+function updatePost(id, newData, callback){
+	fs.readFile(filename, (err, data)=>{
+		if(err){
+			callback(err)
+		}
+		var posts = JSON.parse(data)
+		let updatedPost
+		posts = posts.filter((p) => {
+			if (p.id == id) {
+				updatedPost = p;
+				return false;
+			} else {
+				return true;
+			}
+		});
+		updatedPost = Object.assign(updatedPost, newData)
+		posts.push(updatedPost)
+
+		fs.writeFile(filename, JSON.stringify(posts, null, 4), function (err) {
+      if (err) {
+        throw err
+      }
+      callback(null, posts, updatedPost)
+    })
+	})
+	
 }

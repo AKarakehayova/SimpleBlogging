@@ -42,6 +42,43 @@ app.get('/api/posts', (req, res) => {
   })
 })
 
+app.get('/api/posts/:postId', (req, res) => {
+	console.log(req.params.postId)
+  posts.getPostByID(req.params.postId, (err, post) => {
+    if (err) {
+      res.writeHead(500, {'Content-Type': 'text/html'})
+      res.write(`
+			<html>
+					<body>
+							<p>Sorry something went wrong :( </p>
+					</body>
+			</html>
+	`)
+    } else {
+      res.writeHead(200, { 'Content-Type': 'application/json' })
+      res.end(JSON.stringify(post))
+    }
+  })
+})
+
+app.put('/api/posts/:postId', (req, res) => {
+  posts.updatePost(req.params.postId, req.body, (err, post) => {
+    if (err) {
+      res.writeHead(500, {'Content-Type': 'text/html'})
+      res.write(`
+			<html>
+					<body>
+							<p>Sorry something went wrong :( </p>
+					</body>
+			</html>
+	`)
+    } else {
+      res.writeHead(200, { 'Content-Type': 'application/json' })
+      res.end(JSON.stringify(post))
+    }
+  })
+})
+
   // Start the server
 app.listen(9000, (err) => {
   if (err) throw err

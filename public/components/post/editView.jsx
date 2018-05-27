@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { EditPost } from '../../utils/actions/Blogs/blogs'
 import NotificationSystem from 'react-notification-system'
 import history from '../../utils/history'
+import {getPostById, updatePostById} from '../../utils/requests'
 
 export class EditForm extends React.Component {
   constructor (props) {
@@ -15,12 +16,17 @@ export class EditForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.submitPost = this.submitPost.bind(this)
   }
-
-  componentWillMount () {
-    let id = history.location.pathname.replace('/edit/', '')
-    let post = this.props.Posts.filter(post => post.id.toString() === id)
-    this.setState({post: post[0], id: post[0].id})
-  }
+ 
+	componentDidMount(){
+		let id = history.location.pathname.replace('/edit/', '')
+		getPostById(id)
+		.then((response)=>{
+			this.setState({post: response.data[0], id: id})
+		})
+		.catch((error)=>{
+			console.log(error)
+		})
+	}
 
   handleChange (e) {
     if (e) {
@@ -36,8 +42,13 @@ export class EditForm extends React.Component {
   }
 
   submitPost (e) {
-    e.preventDefault()
-    this.props.EditPost(this.state.id, this.state.post)
+		e.preventDefault()
+		updatePostById(this.state.id, this.state.post)
+		.then((response)=>{
+		})
+		.catch((error)=>{
+			console.log(error)
+		})
     this.refs.notificationSystem.addNotification({
       message: 'Post successfully updated',
       level: 'success'

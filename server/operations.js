@@ -4,7 +4,8 @@ module.exports = {
   getPosts: getPosts,
 	addPost: addPost,
 	getPostByID: getPostByID,
-	updatePost: updatePost
+	updatePost: updatePost,
+	deletePost: deletePost
 }
 let filename = __dirname + '/blog.json'
 
@@ -70,5 +71,27 @@ function updatePost(id, newData, callback){
       callback(null, posts, updatedPost)
     })
 	})
-	
+}
+
+function deletePost(id, callback){
+	fs.readFile(filename, (err, data)=>{
+		if(err){
+			callback(err)
+		}
+		var posts = JSON.parse(data)
+		posts = posts.filter((p) => {
+			if (p.id == id) {
+				return false;
+			} else {
+				return true;
+			}
+		});
+
+		fs.writeFile(filename, JSON.stringify(posts, null, 4), function (err) {
+      if (err) {
+        throw err
+      }
+      callback(null, posts)
+    })
+	})
 }

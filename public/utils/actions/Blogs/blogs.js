@@ -21,3 +21,10 @@ export function EditPost (id, post) {
     post: post
   }
 }
+
+export function SetPosts (posts) {
+  return {
+    type: Constants.SET_POSTS,
+   	posts:posts
+  }
+}

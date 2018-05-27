@@ -25,7 +25,12 @@ export function init (state = initialState, action) {
       rest.push(editedPost)
       return Object.assign({}, state, {
         posts: rest
-      })
+			})
+			
+		case Constants.SET_POSTS:
+			return Object.assign({}, state, {
+				posts: action.posts
+			})
 
     default:
       return state

@@ -3,7 +3,8 @@ module.exports = {
   addNewPost: addNewPost,
 	getPosts: getPosts,
 	getPostById: getPostById,
-	updatePostById: updatePostById
+	updatePostById: updatePostById,
+	deletePostById: deletePostById
 }
 
 function addNewPost (data) {
@@ -38,6 +39,16 @@ function getPostById(id){
 
 function updatePostById(id, data){
 	return axios.put(`http://localhost:9000/api/posts/${id}`, data)
+	.then(function(response){
+		return response
+	})
+	.catch(function (error) {
+		console.log(error)
+	})
+}
+
+function deletePostById(id){
+	return axios.delete(`http://localhost:9000/api/posts/${id}`)
 	.then(function(response){
 		return response
 	})

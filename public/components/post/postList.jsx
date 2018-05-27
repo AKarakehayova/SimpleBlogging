@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import BlogPost from './post'
 import {getPosts} from '../../utils/requests'
+import { SetPosts } from '../../utils/actions/Blogs/blogs'
 
 export class PostList extends React.Component {
 	constructor(props){
@@ -13,7 +14,7 @@ export class PostList extends React.Component {
 	componentDidMount(){
 		getPosts()
 		.then((response)=>{
-			this.setState({posts: response.data})
+			this.props.SetPosts(response.data)
 		})
 		.catch((error)=>{
 			console.log(error)
@@ -21,8 +22,8 @@ export class PostList extends React.Component {
 	}
 
   render () {
-			let content = this.state.posts.length
-			? this.state.posts.map((post, index) => <BlogPost key={index} data={post} />)
+			let content = this.props.Posts.length
+			? this.props.Posts.map((post, index) => <BlogPost key={index} data={post} />)
 			: <div className='no-posts'>No posts yet!</div>
 			return content
 }
@@ -34,4 +35,10 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(PostList)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    SetPosts: (posts) => dispatch(SetPosts(posts))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(PostList)

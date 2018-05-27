@@ -1,21 +1,38 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Remarkable from 'remarkable'
-import { DeletePost } from '../../utils/actions/Blogs/blogs'
+import { SetPosts } from '../../utils/actions/Blogs/blogs'
+import {deletePostById, getPosts} from '../../utils/requests'
 import history from '../../utils/history'
 const markDown = new Remarkable()
 
 export class BlogPost extends React.Component {
+	deletePost(id){
+		deletePostById(id)
+		.then(()=>{
+			getPosts()
+			.then((response)=>{
+				this.props.SetPosts(response.data)
+			})
+			.catch((error)=>{
+				console.log(error)
+			})
+	}) 
+	.catch((error)=>{
+		console.log(error)
+	})
+	}
   render () {
-    let post = this.props.data
+		let post = this.props.data
     let contentMd = markDown.render(post.content)
     let renderMd = { __html: contentMd }
     return (
-      <div className='card text-center'>
+      <div className='card text-center' style={{'width': '60%'}}>
         <div className='card-header'>
           {post.title}
           <span style={{'float': 'right'}}>
-            <span onClick={() => { this.props.DeletePost(post.id) }}>
+						<span onClick={() => { this.deletePost(post.id)
+						}}> 
               <i className='material-icons'>delete</i>
             </span>
             <span onClick={() => {
@@ -45,7 +62,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    DeletePost: (id) => dispatch(DeletePost(id))
+    SetPosts: (posts) => dispatch(SetPosts(posts))
   }
 }
 

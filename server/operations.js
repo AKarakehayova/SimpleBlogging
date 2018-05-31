@@ -61,15 +61,20 @@ function updatePost(id, newData, callback){
 				return true;
 			}
 		});
-		updatedPost = Object.assign(updatedPost, newData)
-		posts.push(updatedPost)
-
-		fs.writeFile(filename, JSON.stringify(posts, null, 4), function (err) {
-      if (err) {
-        throw err
-      }
-      callback(null, posts, updatedPost)
-    })
+		if(!updatedPost){
+			callback({status:404, message:`Not existing post with id ${id}`},posts)
+		}
+		else{
+			updatedPost = Object.assign(updatedPost, newData)
+			posts.push(updatedPost)
+	
+			fs.writeFile(filename, JSON.stringify(posts, null, 4), function (err) {
+				if (err) {
+					throw err
+				}
+				callback(null, posts, updatedPost)
+			})
+		}
 	})
 }
 
@@ -79,19 +84,25 @@ function deletePost(id, callback){
 			callback(err)
 		}
 		var posts = JSON.parse(data)
+		let postToDelete
 		posts = posts.filter((p) => {
 			if (p.id == id) {
+				postToDelete = p
 				return false;
 			} else {
 				return true;
 			}
 		});
-
+		if(!postToDelete){
+			callback({status:404, message:`Not existing post with id ${id}`},posts)
+		}
+		else{
 		fs.writeFile(filename, JSON.stringify(posts, null, 4), function (err) {
       if (err) {
         throw err
       }
       callback(null, posts)
-    })
+		})
+	}
 	})
 }
